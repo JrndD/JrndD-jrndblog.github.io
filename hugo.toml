@@ -1,4 +1,4 @@
 baseURL = 'https://jrndd.github.io/jrndblog/'
 languageCode = 'en-us'
 title = 'Jørund writes about IT'
-theme ='ananke'
+theme ='PaperMod'
