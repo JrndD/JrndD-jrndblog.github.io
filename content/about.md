@@ -6,4 +6,4 @@ My name is Jørund Dahl, and I work at KONE in Finland as Platform Manager in th
 
 Most of my work experience has been in large global companies, which poses many unique challenges when business requirements meets technology.
 
-I enjoy working following implementation projects from start to finish, partaking in value proposition, architectural design proces, technical implementation and hopefully a lot of automation / scripting in between.
+I enjoy following implementation projects from start to finish. Translating business requirements to projects, architectural design proces, technical implementation and hopefully a lot of automation / scripting in between.
