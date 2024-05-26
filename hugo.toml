@@ -2,3 +2,22 @@ baseURL = 'https://jrndd.github.io/jrndblog/'
 languageCode = 'en-us'
 title = 'Jørund writes about IT'
 theme ='PaperMod'
+[params]
+    ShowBreadCrumbs = true
+    ShowReadingTime = true
+    
+    [params.homeInfoParams]
+        Title = 'A survival guide for enterprise IT'
+        Content = 'I enjoy reading articles and blogs on new technologies and features. Unfortunately, how to introduce these technologies in large global enterprises is often left as a fun exercise to the reader. With this blog I aim to help those in the same situation as myself. Showing examples of real-world implementations, and how to tackle the challenges one meets on the way.'
+
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
