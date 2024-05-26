@@ -44,12 +44,44 @@ The things to consider when choosing a license package for a license profile is:
 
 Although daunting at first sight, I will make it easier for you. Assuming your organization uses Entra ID for authentication.
 1. All your employees need a license for **MFA and SSO** using enterprise applications. This license is called Entra ID plan 1, and is included in all Microsoft 365 packages, including the cheap Microsoft 365 F1 package.
-2. 
+2. Employees using a mobile device or solely signing in through browser does not need a larger license than Office 365 F3 or Office 365 E1.
 3. Office workers signing in to Windows need a **Windows device license**. This can either be purchased per device, or per user through the Microsoft 365 E3 or E5 plan. Office workers signing in to Windows usually also needs the Office package (Word, Excel etc), which the E3 and E5 package contains. Win win.
-4. Field workers will fill up their Office 365 F3 provided 2 GB Mailbox, so prepare to have a process for upgrading those that need a larger mailbox to **Exchange Online Plan 1**, instead of giving them the much more expensive E3 / E5 package.
+4. If your cybersecurity operations is relying on Microsoft technology. I strongly recommend investigating if the Microsoft E5 Security is necessary.
+5. Unless you have specific regulations to follow, very few organizations need the Microsoft E5 Compliance.
 
+My recommendation, which is enough for 90% of companies, is as follows: (Recommendations may change based on the price you are able to negotiate with Microsoft)
+Office workers using a Windows laptop - Microsoft 365 E3 OR Microsoft 365 E5
+Office workers not using a Windows laptop - Office 365 E3 (+ Microsoft E5 Security)
+
+
+#### Microsoft 365 and Office 365 E1, E3 Comparison
+
+| Feature Category          | Microsoft 365 E3                              | Microsoft 365 E5                              | Office 365 E1                              | Office 365 E3                              |
+|---------------------------|-----------------------------------------------|-----------------------------------------------|--------------------------------------------|--------------------------------------------|
+| **Tools for Job**         |                                               |                                               |                                            |                                            |
+| Windows Device License    | ✅                                             | ✅                                             | ❌                                          | ❌                                          |
+| Office Package            | Full Office suite                             | Full Office suite                             | Web versions only                          | Full Office suite                          |
+| Email                     | 100 GB mailbox                                | 100 GB mailbox                                | 50 GB mailbox                              | 100 GB mailbox                             |
+
+E5 package contains Power BI pro and Teams Phone which can be a differentiator for some companies if in use.
 
 And, bookmark this page: [m365maps](https://m365maps.com/). It's the ultimate reference on Microsoft 365 licenses.
+
+### Common license add-ons
+Field workers will fill up their Office 365 F3 provided 2 GB Mailbox, so prepare to have a process for upgrading those that need a larger mailbox to **Exchange Online Plan 1**, instead of giving them the much more expensive E3 / E5 package. Either through the standalone license or as part of Office 365 E1.
+
+Teams calling.
+
+Power Platform.
+
+Microsoft 365 Copilot.
+
+Teams Premium.
+
+### Microsoft 365 Premium licenses
+
+
+### Putting it all together
 
 > **Example:**
 > Your organization consists of 10 000 employees.

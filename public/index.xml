@@ -6,8 +6,16 @@
     <description>Recent content on Jørund writes about IT</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 May 2024 21:02:16 +0300</lastBuildDate>
     <atom:link href="http://localhost:1313/jrndblog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Optimizing Microsoft 365 licensing, part 1</title>
+      <link>http://localhost:1313/jrndblog/posts/microsoft365licensing/</link>
+      <pubDate>Sat, 25 May 2024 21:02:16 +0300</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/microsoft365licensing/</guid>
+      <description>It&amp;rsquo;s that time of the year. You have one month before the yearly license numbers are due to be delivered to Microsoft. The questions have started pouring in. Can we make any savings? Are we utilizing all the features we have purchased? Do we have enough licenses for all our workloads? Are we even compliant?
+You have already dedicated your time to other projects, and now this needs to be handled in the middle of all this.</description>
+    </item>
     <item>
       <title>About me</title>
       <link>http://localhost:1313/jrndblog/about/</link>
@@ -15,7 +23,7 @@
       <guid>http://localhost:1313/jrndblog/about/</guid>
       <description>My name is Jørund Dahl, and I work at KONE in Finland as Platform Manager in the Digital Workplace Platforms team. I have a broad background from IT infrastructure, mostly focused on end user computing, security, identity and Microsoft 365.
 Most of my work experience has been in large global companies, which poses many unique challenges when business requirements meets technology.
-I enjoy working following implementation projects from start to finish, partaking in value proposition, architectural design proces, technical implementation and hopefully a lot of automation / scripting in between.</description>
+I enjoy following implementation projects from start to finish. Translating business requirements to projects, architectural design proces, technical implementation and hopefully a lot of automation / scripting in between.</description>
     </item>
   </channel>
 </rss>
