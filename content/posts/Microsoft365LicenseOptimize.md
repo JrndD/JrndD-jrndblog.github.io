@@ -11,6 +11,11 @@ This article will dive into license optimization. Which reports and measurements
 
 If you haven't already, I recommend reading through part 1 of this series to get a brief understanding of license profiles. I will be referring to some terms introduced there. If you are already familiar with Microsoft 365 licensing, then part 2 is the place to start.
 
+This article is part of a series on Microsoft 365 license optimization:
+- Part 1 - [License basics](https://jorund.dahl.cloud/posts/microsoft365licensing/)
+- Part 2 - [Data driven decisions. How to accurately measure license usage?](https://jorund.dahl.cloud/posts/microsoft365licenseoptimize/)
+- Part 3 - Automation - Coming!
+
 *Disclaimer:* Before diving into any usage data. Please remember that you are dealing with personal identifiable information (PII) and depending on your organization and country you might be limited in what you can do. Please consult with your legal and data privacy team before taking any action!
 
 ## Useful data sources

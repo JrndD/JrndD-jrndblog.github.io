@@ -13,9 +13,9 @@ It's that time of the year. You have one month before the yearly license numbers
 This guide focuses on the things I consider to be the most important when designing your license strategy. I have experience managing licenses for large global enterprises over several years, and can show to several million euros saved on Microsoft licenses for some companies in my career. Part 2 and 3 of this series is where the cool stuff happens, but I need to cover some of the license basics before we get there.
 
 I am planning to divide this guide into three parts:
-- Part 1 - License basics
-- Part 2 - Data driven decisions. How to accurately measure license usage?
-- Part 3 - Automation
+- Part 1 - [License basics](https://jorund.dahl.cloud/posts/microsoft365licensing/)
+- Part 2 - [Data driven decisions. How to accurately measure license usage?](https://jorund.dahl.cloud/posts/microsoft365licenseoptimize/)
+- Part 3 - Automation - Coming!
 
 ## Get your license profiles in order
 
