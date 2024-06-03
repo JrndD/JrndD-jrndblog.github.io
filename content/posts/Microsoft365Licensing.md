@@ -10,7 +10,7 @@ ShowToc = true
 
 It's that time of the year. You have one month before the yearly license numbers are due to be delivered to Microsoft. The questions have started pouring in. Can we make any savings? Are we utilizing all the features we have purchased? Do we have enough licenses for all our workloads? Are we even compliant?
 
-This guide focuses on the things I consider to be the most important when designing your license strategy. I have experience managing licenses for large global enterprises over several years, and can show to several million euros saved on Microsoft licenses for some companies in my career. Part 2 and 3 of this series is where the cool stuff happens, but I need to cover some of the license basics before we get there.
+This guide focuses on the things I consider to be the most important when designing your license strategy. The main purpose is explaining the basics and setting the scene for part 2 and 3 where I will talk about investigating the data available to us, and how to automate most of the process.
 
 I am planning to divide this guide into three parts:
 - Part 1 - [License basics](https://jorund.dahl.cloud/posts/microsoft365licensing/)
