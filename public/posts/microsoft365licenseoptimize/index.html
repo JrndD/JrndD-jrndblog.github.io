@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/jrndblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=jrndblog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Optimizing Microsoft 365 licensing. Part 2 - License optimization | Jørund writes about IT</title>
+<meta name="keywords" content="">
+<meta name="description" content="This article will dive into license optimization. Which reports and measurements are available to us, and what are the important metrics to guide the decision on which license package a user needs? Ultimately, we want to use this information to reduce cost, but it can also help us to discover if we are uncompliant according to the license contract.
+If you haven&rsquo;t already, I recommend reading through part 1 of this series to get a brief understanding of license profiles.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/">
+<link crossorigin="anonymous" href="/jrndblog/assets/css/stylesheet.4599eadb9eb2ad3d0a8d6827b41a8fda8f2f4af226b63466c09c5fddbc8706b7.css" integrity="sha256-RZnq256yrT0KjWgntBqP2o8vSvImtjRmwJxf3byHBrc=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/jrndblog/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/jrndblog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/jrndblog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/jrndblog/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/jrndblog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/jrndblog/" accesskey="h" title="Jørund writes about IT (Alt + H)">Jørund writes about IT</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/jrndblog/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/jrndblog/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/jrndblog/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/jrndblog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Optimizing Microsoft 365 licensing. Part 2 - License optimization
+    </h1>
+    <div class="post-meta"><span title='2024-06-03 22:40:59 +0300 EEST'>June 3, 2024</span>&nbsp;·&nbsp;7 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/jrndblog/Microsoft365Licensing/License%20optimization.jpg" alt="Investigating all the data">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#useful-data-sources" aria-label="Useful data sources">Useful data sources</a><ul>
+                        
+                <li>
+                    <a href="#get-familiar-with-the-built-in-reports" aria-label="Get familiar with the built in reports">Get familiar with the built in reports</a></li>
+                <li>
+                    <a href="#entra-id-and-ad-sign-in-logs" aria-label="Entra ID and AD sign in logs">Entra ID and AD sign in logs</a></li>
+                <li>
+                    <a href="#defender-for-endpoint-reports" aria-label="Defender for Endpoint reports">Defender for Endpoint reports</a></li></ul>
+                </li>
+                <li>
+                    <a href="#other-factors-to-evaluate" aria-label="Other factors to evaluate">Other factors to evaluate</a></li>
+                <li>
+                    <a href="#license-profiles" aria-label="License profiles">License profiles</a><ul>
+                        
+                <li>
+                    <a href="#office-users" aria-label="Office users">Office users</a></li>
+                <li>
+                    <a href="#field-users" aria-label="Field users">Field users</a></li>
+                <li>
+                    <a href="#other-licenses" aria-label="Other licenses">Other licenses</a><ul>
+                        
+                <li>
+                    <a href="#visio-and-project" aria-label="Visio and Project">Visio and Project</a></li>
+                <li>
+                    <a href="#enterprise-applications" aria-label="Enterprise Applications">Enterprise Applications</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#putting-it-all-together" aria-label="Putting it all together">Putting it all together</a></li>
+                <li>
+                    <a href="#informing-vs-not-informing-about-license-changes" aria-label="Informing vs not informing about license changes">Informing vs not informing about license changes</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>This article will dive into license optimization. Which reports and measurements are available to us, and what are the important metrics to guide the decision on which license package a user needs? Ultimately, we want to use this information to reduce cost, but it can also help us to discover if we are uncompliant according to the license contract.</p>
+<p>If you haven&rsquo;t already, I recommend reading through part 1 of this series to get a brief understanding of license profiles. I will be referring to some terms introduced there. If you are already familiar with Microsoft 365 licensing, then part 2 is the place to start.</p>
+<p><em>Disclaimer:</em> Before diving into any usage data. Please remember that you are dealing with personal identifiable information (PII) and depending on your organization and country you might be limited in what you can do. Please consult with your legal and data privacy team before taking any action!</p>
+<h2 id="useful-data-sources">Useful data sources<a hidden class="anchor" aria-hidden="true" href="#useful-data-sources">#</a></h2>
+<p>Microsoft provides almost all the data we need to track usage, this has improved a lot over the last few years, and I expect the reports to get even better as time goes by.</p>
+<h3 id="get-familiar-with-the-built-in-reports">Get familiar with the built in reports<a hidden class="anchor" aria-hidden="true" href="#get-familiar-with-the-built-in-reports">#</a></h3>
+<p>The first place to investigate is the <a href="https://admin.microsoft.com/#/reportsUsage">usage reports in the Microsoft 365 admin center</a>. If your company obfuscates names in these reports, you should discuss with your legal or data privacy team if you can get limited access to read out the data.</p>
+<p>I always export the reports over the last 180 days, but if you want to be more aggressive on license reallocation you can use 90 days activity. I would not recommend going any lower than that.</p>
+<p>The main reports we are interested in are:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/graph/api/reportroot-getm365appuserdetail?view=graph-rest-1.0&amp;tabs=http">getM365AppUserDetail</a>
+<ul>
+<li>Office package (M365 Apps for Enterprise) usage per user</li>
+</ul>
+</li>
+<li><a href="https://learn.microsoft.com/en-us/graph/api/reportroot-getonedriveusageaccountdetail?view=graph-rest-1.0&amp;tabs=http">getOneDriveUsageAccountDetail</a>
+<ul>
+<li>OneDrive storage used per user</li>
+</ul>
+</li>
+<li><a href="https://learn.microsoft.com/en-us/graph/api/reportroot-getmailboxusagedetail?view=graph-rest-1.0&amp;tabs=http">getMailboxUsageDetail</a>
+<ul>
+<li>Mailbox storage used per user</li>
+</ul>
+</li>
+<li><a href="https://learn.microsoft.com/en-us/graph/api/reportroot-getoffice365activeuserdetail?view=graph-rest-1.0&amp;tabs=http">getOffice365ActiveUserDetail</a>
+<ul>
+<li>General activity in office tools per user</li>
+</ul>
+</li>
+</ul>
+<h3 id="entra-id-and-ad-sign-in-logs">Entra ID and AD sign in logs<a hidden class="anchor" aria-hidden="true" href="#entra-id-and-ad-sign-in-logs">#</a></h3>
+<p>Our second stop is analyzing the Entra ID sign-ins. I recommend storing the data in a log analytics workspace for longer retention and fast programmatic access using KQL, but if you don&rsquo;t have access to that then you can download the 30-day logs. Every Entra ID user has a &ldquo;last signed in&rdquo; field that you can use, but unfortunately this gets updated on failed sign ins! So, you cannot trust that this is correct. The better way of doing it is to see when the last sign in was using KQL.</p>
+<p>The good old AD lastSignIn field is also a good indication on when last sign in happened. Just note that this field is also not 100% reliable, but it is a good indicator of activity. Last password reset can also be used if you are trying to identify stale accounts.</p>
+<h3 id="defender-for-endpoint-reports">Defender for Endpoint reports<a hidden class="anchor" aria-hidden="true" href="#defender-for-endpoint-reports">#</a></h3>
+<p>If your company uses Sentinel and Defender for Endpoint, you might already export defender for endpoint events to log analytics. If so, then you have a gold mine when it comes to finding which users are signing in to Windows devices. Write a KQL query to export all users who sign in to your organizations Windows devices for the last 180 days. If you want to get fancy you can count the number of sign-ins to devices to see if someone with low usage can utilize the Microsoft 365 F3 license.</p>
+<h2 id="other-factors-to-evaluate">Other factors to evaluate<a hidden class="anchor" aria-hidden="true" href="#other-factors-to-evaluate">#</a></h2>
+<p>From my experience, here are some other factors to remember:</p>
+<ul>
+<li>Get data from your HR tool to see who is on leave. You might not want to downgrade the license of these users.</li>
+<li>Create a list of VIP users that you don&rsquo;t want to automatically change licenses of.</li>
+<li>Non-person accounts like service accounts, shared mailboxes etc needs to be evaluated per usecase. Some service accounts might have license requirements that do not trigger any activity.</li>
+<li>Easily granted, easily taken away. It is easier to downgrade licenses if you have a fully automated and fast way for users to get licenses back.</li>
+</ul>
+<h2 id="license-profiles">License profiles<a hidden class="anchor" aria-hidden="true" href="#license-profiles">#</a></h2>
+<h3 id="office-users">Office users<a hidden class="anchor" aria-hidden="true" href="#office-users">#</a></h3>
+<p>For office users signing in to a Windows device, the following criteria are the most important:</p>
+<ul>
+<li>Have they signed in to a Windows device in the last 180 days? If so, how many times?</li>
+<li>Have they used the office package in the last 180 days?</li>
+<li>Are they active within the office tools (Teams, SharePoint, Viva Engage, Email)?</li>
+<li>For stale accounts, do they have any sign ins in AD, Entra ID etc for the last 180 days?</li>
+<li>What is their OneDrive size? (Office 365 F3 and E1 has different capacity, and a license downgrade can block them from using it)</li>
+<li>What is their Mailbox size? (Exchange Online P1 (50 GB) or P2 (100 GB) can be used when downgrading users with large mailboxes from E3 / E5 to F3)</li>
+</ul>
+<h3 id="field-users">Field users<a hidden class="anchor" aria-hidden="true" href="#field-users">#</a></h3>
+<p>For field users signing in to a mobile device, the following criteria are the most important:</p>
+<ul>
+<li>Are they active within the office tools?</li>
+<li>For stale accounts, do they have any sign ins in AD, Entra ID etc for the last 180 days?</li>
+</ul>
+<h3 id="other-licenses">Other licenses<a hidden class="anchor" aria-hidden="true" href="#other-licenses">#</a></h3>
+<h4 id="visio-and-project">Visio and Project<a hidden class="anchor" aria-hidden="true" href="#visio-and-project">#</a></h4>
+<p>Both Visio and Project now have very detailed usage reports in the Microsoft 365 admin center. Filter away every user with any activity in the tools for the last 180 days and remove the licenses for the rest.</p>
+<h4 id="enterprise-applications">Enterprise Applications<a hidden class="anchor" aria-hidden="true" href="#enterprise-applications">#</a></h4>
+<p>If you are using Entra ID enterprise applications with SSO, and your application owners are forcing all sign-ins to go through Entra ID. Then you can create full overviews of all sign ins for your application owners based on the sign in logs as long as your retention is.</p>
+<p>Example, your organization uses a CAD tool costing 150 € per user per month. The application is set up solely using Entra ID SSO. Noone will be able to sign in to this application without it generating a sign in log. Filter on the application and remove all licenses not in use.</p>
+<h2 id="putting-it-all-together">Putting it all together<a hidden class="anchor" aria-hidden="true" href="#putting-it-all-together">#</a></h2>
+<p>How much effort you choose to put into this depends will directly correlate with savings achieved. I fully believe that any company with over 10 000 users can have someone hired to only optimize Microsoft 365 licenses as a software asset manager, and they would pay for themselves. From the easy way of manually exporting and combining the data in Excel or Power BI once every year, to fully automated daily exports, you should at least start somewhere to get familiar with the data.</p>
+<p>In my current company everything is automated and fed in to a SQL database daily. We visualize the data using Power BI reports and can automatically upgrade and downgrade without any manual intervention. The added benefit is that the SQL database is great for speeding up other scripts, as the size of our company makes any read operation using graph extremely slow.</p>
+<h2 id="informing-vs-not-informing-about-license-changes">Informing vs not informing about license changes<a hidden class="anchor" aria-hidden="true" href="#informing-vs-not-informing-about-license-changes">#</a></h2>
+<p>Once all of the above is done. You have combined all the sources of data you could find and you are confident in the license downgrades (and upgrades!) that you can achieve, you have to ask the question on whether to inform the user or not.</p>
+<p>On one hand it is good to have transparency so that licenses are not suddenly disappearing, but on the other hand people tend to hoard licenses like a dragon and absolutely refuse to let go of them even if the usage data shows otherwise. I tend to remove some licenses without informing, while others we send a short informational email with link to the license request form if they ever need it back.</p>
+<p>In the next part of this series, we will have a look at how to automate as much of this as possible. There is nothing described in this article that I haven&rsquo;t already automated, but some sources are easier to work with than others. Stay tuned for part 3!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

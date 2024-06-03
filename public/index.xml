@@ -6,8 +6,16 @@
     <description>Recent content on Jørund writes about IT</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 May 2024 21:02:16 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 03 Jun 2024 22:40:59 +0300</lastBuildDate>
     <atom:link href="http://localhost:1313/jrndblog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Optimizing Microsoft 365 licensing. Part 2 - License optimization</title>
+      <link>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/</link>
+      <pubDate>Mon, 03 Jun 2024 22:40:59 +0300</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/</guid>
+      <description>This article will dive into license optimization. Which reports and measurements are available to us, and what are the important metrics to guide the decision on which license package a user needs? Ultimately, we want to use this information to reduce cost, but it can also help us to discover if we are uncompliant according to the license contract.
+If you haven&amp;rsquo;t already, I recommend reading through part 1 of this series to get a brief understanding of license profiles.</description>
+    </item>
     <item>
       <title>Optimizing Microsoft 365 licensing. Part 1 - License basics</title>
       <link>http://localhost:1313/jrndblog/posts/microsoft365licensing/</link>

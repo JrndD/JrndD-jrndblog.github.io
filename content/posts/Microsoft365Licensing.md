@@ -1,7 +1,6 @@
 +++
 title = 'Optimizing Microsoft 365 licensing. Part 1 - License basics'
 date = 2024-05-25T21:02:16+03:00
-draft = true
 ShowToc = true
 [params.cover]
   image = 'Microsoft365Licensing/money_flying.webp'
