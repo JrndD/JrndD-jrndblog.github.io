@@ -57,7 +57,7 @@ From my experience, here are some other factors to remember:
 
 For office users signing in to a Windows device, the following criteria are the most important:
 - Have they signed in to a Windows device in the last 180 days? If so, how many times?
-- Have they used the office package in the last 180 days?
+- Have they used Microsoft 365 Apps for Enterprise (the office package) in the last 180 days?
 - Are they active within the office tools (Teams, SharePoint, Viva Engage, Email)?
 - For stale accounts, do they have any sign ins in AD, Entra ID etc for the last 180 days?
 - What is their OneDrive size? (Office 365 F3 and E1 has different capacity, and a license downgrade can block them from using it)
