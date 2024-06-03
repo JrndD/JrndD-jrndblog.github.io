@@ -88,7 +88,7 @@ Example, your organization uses a CAD tool costing 150 € per user per month. T
 
 ## Putting it all together
 
-How much effort you choose to put into this depends will directly correlate with savings achieved. I fully believe that any company with over 10 000 users can have someone hired to only optimize Microsoft 365 licenses as a software asset manager, and they would pay for themselves. From the easy way of manually exporting and combining the data in Excel or Power BI once every year, to fully automated daily exports, you should at least start somewhere to get familiar with the data. 
+How much effort you choose to put into this will directly correlate with savings achieved. I fully believe that any company with over 10 000 users can have someone hired to only optimize Microsoft 365 licenses as a software asset manager, and they would pay for themselves. From the easy way of manually exporting and combining the data in Excel or Power BI once every year, to fully automated daily exports, you should at least start somewhere to get familiar with the data. 
 
 In my current company everything is automated and fed in to a SQL database daily. We visualize the data using Power BI reports and can automatically upgrade and downgrade without any manual intervention. The added benefit is that the SQL database is great for speeding up other scripts, as the size of our company makes any read operation using graph extremely slow.
 
