@@ -49,10 +49,10 @@ Storage savings around 80 MB for selected test site.
 #### Global settings
 Change the global version history limit setting to "Automatic" in the SharePoint admin center. This will apply to all new OneDrive accounts and new SharePoint document libraries.
 ![Setting the version history limit to Automatic](/SharePointVersioning/GlobalSettings.png)
-Note, changing the settings will not affect existing files, only new ones. It will not delete any already existing versions. For that we will need to run a trim job which we will cover later.
+Note, changing the settings will not delete any already existing versions. For that we will need to run a trim job which we will cover later.
 
 #### Site settings
-As shown in the image above, this setting does not apply to existing document libraries unless they are set to inherit tenant settings. To enable it for existing document libraries, you need to use PowerShell.
+As shown in the image above, this setting does not apply to existing document libraries unless they are set to inherit tenant settings. We can verify and change these settings using PowerShell.
 
 ```PowerShell
 # Check the current version policy for a site
@@ -86,7 +86,7 @@ foreach ($site in $sites)
     set-pnptenantsite -identity $site -owners $yourAccount
     # Connect to the site to switch context
     connect-pnpOnline -Url $site -ClientId $PnPClientId
-    # Start the version deletion job
+    # Start the version deletion job without asking for confirmation.
     New-PnPSiteFileVersionBatchDeleteJob -automatic -force
     # Remove your account as a site collection admin
     remove-pnpsitecollectionadmin -owners $yourAccount
