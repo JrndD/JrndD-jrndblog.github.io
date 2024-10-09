@@ -11,7 +11,7 @@ SharePoint and OneDrive automatically saves major or minor versions as you work,
 Microsoft recently started rolling out general availability of feature ID 145802: "SharePoint: Improvements for document library version history limits". In simpler terms this means we now have an automatic way of thinning out the version history of files and documents in SharePoint Online.
 
 ### Why is it important?
-SharePoint Online has a default version history limit of 500 versions per file, which are stored forever. This means that if you have a 100 MB file that is edited around 10 times per day, you will after two months have maxed out the version history, and the 100 MB file will take up 50 GB of storage. While this might sound like an edge case, it is not uncommon for companies to have large PowerPoint presentations and Excel sheets that are edited frequently. Co-authoring and autosave features in Office 365 also contributes to the version history growing rapidly.
+SharePoint Online has a default version history limit of 500 versions per file, which are stored forever. This means that if you have a 100 MB file that is edited around 10 times per day, you will after two months have maxed out the version history, and the 100 MB file will take up 50 GB of storage. While this might sound like an edge case, it is not uncommon for companies to have large PowerPoint presentations and Excel sheets that are edited frequently. Co-authoring and autosave features in Microsoft 365 also contributes to the version history growing rapidly.
 
 But wait, isn't deduplication a thing? Surely this one file is not taking up 50 GB of storage? Unfortunately, it counts towards the quota and Microsoft is probably reaping the benefits of this.
 
