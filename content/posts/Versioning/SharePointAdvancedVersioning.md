@@ -37,8 +37,9 @@ Before we start changing the settings, lets first understand the impact and see 
 # If this doesn't work, you might need to install the prerelease version depending on the command you wish to run.
 # Install-Module PnP.PowerShell -AllowPrerelease -SkipPublisherCheck
 
+connect-pnpOnline -Url "https://yourcompany.sharepoint.com/sites/yoursite" -ClientId $PnPClientId
 # Requires site admin permissions to https://yourcompany.sharepoint.com/sites/yoursite to run
-New-PnPSiteFileVersionExpirationReportJob  -ReportUrl "https://yourcompany.sharepoint.com/sites/yoursite/Shared%20Documents/VersionReport.csv"
+New-PnPSiteFileVersionExpirationReportJob -ReportUrl "https://yourcompany.sharepoint.com/sites/yoursite/Shared%20Documents/VersionReport.csv"
 ```
 The above code will generate a version report called VersionReport.csv in the Shared Documents library of the site. You can then download the report and run an impact analysis using tool provided by Microsoft. [(Microsoft Learn: Version usage report analysis tool)](https://learn.microsoft.com/en-us/sharepoint/tutorial-run-what-if-analysis#run-impact-analysis-of-setting-automatic-version-history-limits)
 
