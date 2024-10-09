@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/jrndblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=jrndblog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>SharePoint Advanced versioning | Jørund writes about IT</title>
+<meta name="keywords" content="">
+<meta name="description" content="Is your company paying for extra SharePoint storage? Would you like not to?
+What is it? SharePoint and OneDrive automatically saves a major or minor version as you work, so there is a history of changes that you can access and revert to if needed. Microsoft recently started rolling out general availability of feature ID 145802: &ldquo;SharePoint: Improvements for document library version history limits&rdquo;. In simpler terms this means we now have an automatic way of thinning out the version history of files and documents in SharePoint Online.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/jrndblog/posts/versioning/sharepointadvancedversioning/">
+<link crossorigin="anonymous" href="/jrndblog/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/jrndblog/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/jrndblog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/jrndblog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/jrndblog/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/jrndblog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/jrndblog/posts/versioning/sharepointadvancedversioning/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/jrndblog/" accesskey="h" title="Jørund writes about IT (Alt + H)">Jørund writes about IT</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/jrndblog/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/jrndblog/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/jrndblog/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/jrndblog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      SharePoint Advanced versioning
+    </h1>
+    <div class="post-meta"><span title='2024-10-09 19:59:42 +0300 EEST'>October 9, 2024</span>&nbsp;·&nbsp;5 min
+
+</div>
+  </header> 
+  <div class="post-content"><p>Is your company paying for extra SharePoint storage? Would you like not to?</p>
+<h3 id="what-is-it">What is it?<a hidden class="anchor" aria-hidden="true" href="#what-is-it">#</a></h3>
+<p>SharePoint and OneDrive automatically saves a major or minor version as you work, so there is a history of changes that you can access and revert to if needed.
+Microsoft recently started rolling out general availability of feature ID 145802: &ldquo;SharePoint: Improvements for document library version history limits&rdquo;. In simpler terms this means we now have an automatic way of thinning out the version history of files and documents in SharePoint Online.</p>
+<h3 id="why-is-it-important">Why is it important?<a hidden class="anchor" aria-hidden="true" href="#why-is-it-important">#</a></h3>
+<p>SharePoint Online has a default version history limit of 500 versions per file. This means that if you have a 100 MB file that is edited around 10 times per day, you will after two months have maxed out the version history, and the 100 MB file will take up 50 GB of storage. While this might sound like an edge case, it is not uncommon for companies to have large PowerPoint presentations and Excel sheets that are edited frequently. Co-authoring and autosave features in Office 365 also contributes to the version history growing rapidly.</p>
+<p>But wait, isn&rsquo;t deduplication a thing? Surely this one file is not taking up 50 GB of storage? Unfortunately, it counts towards the quota and Microsoft is probably reaping the benefits of this.</p>
+<h3 id="how-does-it-work">How does it work?<a hidden class="anchor" aria-hidden="true" href="#how-does-it-work">#</a></h3>
+<p>The idea is that the older a version becomes, the less value it has. Automatic versioning thin out the version history, allowing restoration points to be evenly spread out over time while still keeping the oldest versions.
+<img loading="lazy" src="../Versions.webp" alt="After enabling advanced versioning"  />
+
+Version storage under Automatic setting is determined by the following algorithm:</p>
+<ul>
+<li>All versions created within 500 count limit in first 30 days.</li>
+<li>Hourly versions (versions created at the top of the hour) between 30 to 60 day period.</li>
+<li>Daily versions (versions created at the beginning of each day) between 60 to 180 day period.</li>
+<li>Weekly versions (versions created at the beginning of the week) beyond 180 days or more are available indefinitely until the maximum 500 count limit has reached.</li>
+</ul>
+<p><img loading="lazy" src="../version-activity.png" alt="Comparing version configuration options"  />
+
+The automatic setting gives a good balance between storage and usability. From experience implementing this feature for a number of sites, the storage savings can be significant. Up to 90%(!!!) storage reduction for certain sites.</p>
+<h3 id="how-to-enable-it">How to enable it?<a hidden class="anchor" aria-hidden="true" href="#how-to-enable-it">#</a></h3>
+<p>Note, changing the settings will not affect existing files, only new ones. If you want to estimate the impact and see which files are deleted, you can first generate a version usage report and run a &ldquo;What-If&rdquo; analysis.</p>
+<h4 id="generate-and-analyze-version-usage-report">Generate and analyze version usage report<a hidden class="anchor" aria-hidden="true" href="#generate-and-analyze-version-usage-report">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span><span style="color:#75715e"># Verify PnP.PowerShell version</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update-Module PnP.PowerShell</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If this doesn&#39;t work, you might need to install the prerelease version depending on the command you wish to run.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install-Module PnP.PowerShell -AllowPrerelease -SkipPublisherCheck</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Requires site admin permissions to https://yourcompany.sharepoint.com/sites/yoursite to run</span>
+</span></span><span style="display:flex;"><span>New-PnPSiteFileVersionExpirationReportJob  -ReportUrl <span style="color:#e6db74">&#34;https://yourcompany.sharepoint.com/sites/yoursite/Shared%20Documents/VersionReport.csv&#34;</span>
+</span></span></code></pre></div><p>The above code will generate a version report called VersionReport.csv in the Shared Documents library of the site. You can then download the report and run an impact analysis using tool provided by Microsoft. <a href="https://learn.microsoft.com/en-us/sharepoint/tutorial-run-what-if-analysis#run-impact-analysis-of-setting-automatic-version-history-limits">(Microsoft Learn: Version usage report analysis tool)</a></p>
+<p>In the provided AnalyzeReportFile_Template.xlsx, the three most important tabs are &ldquo;Dataset&rdquo; which showns the version history of each file and if they will expire if an automatic policy is applied. &ldquo;Version Count&rdquo; which shows a graph of how many versions will be available before and after policy trim, and &ldquo;Version Size Analysis&rdquo; which shows the potential storage savings.
+<img loading="lazy" src="../VersionSavings.png" alt="Setting the version history limit to Automatic"  />
+
+Storage savings around 80 MB for selected test site.</p>
+<h4 id="global-settings">Global settings<a hidden class="anchor" aria-hidden="true" href="#global-settings">#</a></h4>
+<p>Change the global version history limit setting to &ldquo;Automatic&rdquo; in the SharePoint admin center. This will apply to all new OneDrive accounts and new SharePoint document libraries.
+<img loading="lazy" src="../GlobalSettings.png" alt="Setting the version history limit to Automatic"  />
+</p>
+<h4 id="site-settings">Site settings<a hidden class="anchor" aria-hidden="true" href="#site-settings">#</a></h4>
+<p>As shown in the image above, this setting does not apply to existing document libraries unless they are set to inherit tenant settings. To enable it for existing document libraries, you need to use PowerShell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span><span style="color:#75715e"># Check the current version policy for a site</span>
+</span></span><span style="display:flex;"><span>Get-PnPSiteVersionPolicy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If you want the site to inherit the global policy you can change the setting</span>
+</span></span><span style="display:flex;"><span>Set-PnPSiteVersionPolicy -InheritFromTenant
+</span></span></code></pre></div><h4 id="trimming-existing-version-history">Trimming existing version history<a hidden class="anchor" aria-hidden="true" href="#trimming-existing-version-history">#</a></h4>
+<p>The above code changes the versioning policy for all new files. If you want to want to start thinning out the version history immediately, you can use the following code.</p>
+<p>Warning! This code will irreversibly delete versions of files in the sites listed! Deleted versions are not recoverable, and will not be visible in the recycle bin. Make sure you understand the impact before running this code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span><span style="color:#75715e"># Ensure that the account you are using has SharePoint Administrator activated</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example input. Array of URLs</span>
+</span></span><span style="display:flex;"><span>$sites = <span style="color:#e6db74">&#34;https://yourcompany.sharepoint.com/sites/yoursite&#34;</span>
+</span></span><span style="display:flex;"><span>$donesites = <span style="color:#e6db74">&#34;https://yourcompany.sharepoint.com/sites/yourothersite&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$companyAdminSite = <span style="color:#e6db74">&#39;https://yourcompany-admin.sharepoint.com&#39;</span>
+</span></span><span style="display:flex;"><span>$yourAccount = <span style="color:#e6db74">&#39;youraccount@company.com&#39;</span>
+</span></span><span style="display:flex;"><span>$PnPClientId = <span style="color:#e6db74">&#34;Your PnP Client ID&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>connect-pnpOnline -url $companyAdminSite -ClientId $PnPClientId
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($site <span style="color:#66d9ef">in</span> $sites) 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ($site -in $donesites) {<span style="color:#66d9ef">continue</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    set-pnptenantsite -identity $site -owners $yourAccount
+</span></span><span style="display:flex;"><span>    connect-pnpOnline -Url $site -ClientId $PnPClientId
+</span></span><span style="display:flex;"><span>    New-PnPSiteFileVersionBatchDeleteJob -automatic -force
+</span></span><span style="display:flex;"><span>    remove-pnpsitecollectionadmin -owners $yourAccount
+</span></span><span style="display:flex;"><span>    connect-pnpOnline -url $companyAdminSite -ClientId $PnPClientId
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You can get around adding yourself as a site collection admin to every site by using an enterprise registration with application permissions, but I wanted to keep the setup simple. The trick with this (ugly) code is that you only need to interactively sign in once.</p>
+<p>The above code can also be run per library, but I have not tested it. (New-PnPLibraryFileVersionBatchDeleteJob)</p>
+<p>Congratilations! You have now enabled automatic versioning for SharePoint Online and saved your company a lot of money. Ensure you write down your achievements and send them to your managers.</p>
+<h3 id="where-can-i-learn-more">Where can I learn more?<a hidden class="anchor" aria-hidden="true" href="#where-can-i-learn-more">#</a></h3>
+<p>Microsoft documentation: <a href="https://learn.microsoft.com/en-us/sharepoint/plan-version-storage">(Microsoft Learn: Plan version storage)</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

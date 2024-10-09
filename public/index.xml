@@ -6,10 +6,25 @@
     <description>Recent content on Jørund writes about IT</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Jun 2024 22:40:59 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2024 19:59:42 +0300</lastBuildDate>
     <atom:link href="http://localhost:1313/jrndblog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Optimizing Microsoft 365 licensing. Part 2 - License optimization</title>
+      <title>SharePoint Advanced versioning</title>
+      <link>http://localhost:1313/jrndblog/posts/versioning/sharepointadvancedversioning/</link>
+      <pubDate>Wed, 09 Oct 2024 19:59:42 +0300</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/versioning/sharepointadvancedversioning/</guid>
+      <description>Is your company paying for extra SharePoint storage? Would you like not to?
+What is it? SharePoint and OneDrive automatically saves a major or minor version as you work, so there is a history of changes that you can access and revert to if needed. Microsoft recently started rolling out general availability of feature ID 145802: &amp;ldquo;SharePoint: Improvements for document library version history limits&amp;rdquo;. In simpler terms this means we now have an automatic way of thinning out the version history of files and documents in SharePoint Online.</description>
+    </item>
+    <item>
+      <title>Optimizing Microsoft 365 licensing. Part 3 - Data retrieval and report</title>
+      <link>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimizationautomation/</link>
+      <pubDate>Thu, 06 Jun 2024 19:00:33 +0300</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimizationautomation/</guid>
+      <description>The license profiles and strategy is clear. We understand what are the data sources to base our decisions on. Now we want to combine it all together.</description>
+    </item>
+    <item>
+      <title>Optimizing Microsoft 365 licensing. Part 2 - Data driven license optimization</title>
       <link>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/</link>
       <pubDate>Mon, 03 Jun 2024 22:40:59 +0300</pubDate>
       <guid>http://localhost:1313/jrndblog/posts/microsoft365licenseoptimize/</guid>

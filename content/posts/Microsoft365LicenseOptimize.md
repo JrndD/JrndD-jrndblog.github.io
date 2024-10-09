@@ -1,5 +1,5 @@
 +++
-title = 'Optimizing Microsoft 365 licensing. Part 2 - License optimization'
+title = 'Optimizing Microsoft 365 licensing. Part 2 - Data driven license optimization'
 date = 2024-06-03T22:40:59+03:00
 ShowToc = true
 [params.cover]
