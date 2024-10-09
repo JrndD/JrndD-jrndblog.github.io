@@ -1,6 +1,7 @@
 +++
 title = 'SharePoint Advanced versioning'
 date = 2024-10-09T19:59:42+03:00
+ShowToc = true
 +++
 
 Is your company paying for extra SharePoint storage? Would you like not to?
