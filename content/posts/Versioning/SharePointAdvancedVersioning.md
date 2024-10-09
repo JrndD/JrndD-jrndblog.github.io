@@ -17,7 +17,7 @@ But wait, isn't deduplication a thing? Surely this one file is not taking up 50 
 
 ### How does it work?
 The idea is that the older a version becomes, the less value it has. Automatic versioning thin out the version history, allowing restoration points to be evenly spread out over time while still keeping the oldest versions.
-![After enabling advanced versioning](../Versions.webp)
+![After enabling advanced versioning](/Versions.webp)
 Version storage under Automatic setting is determined by the following algorithm:
 - All versions created within 500 count limit in first 30 days.
 - Hourly versions (versions created at the top of the hour) between 30 to 60 day period.
