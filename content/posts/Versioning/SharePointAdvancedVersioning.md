@@ -2,6 +2,9 @@
 title = 'SharePoint Advanced versioning'
 date = 2024-10-09T19:59:42+03:00
 ShowToc = true
+[params.cover]
+  image = 'SharePointVersioning/TypingSeveralVersions.png'
+  alt = 'Getting lost in the version history'
 +++
 
 Is your company paying for extra SharePoint storage? Would you like not to?
