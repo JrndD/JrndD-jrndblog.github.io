@@ -7,7 +7,7 @@ ShowToc = true
 Is your company paying for extra SharePoint storage? Would you like not to?
 
 ### What is it?
-SharePoint and OneDrive automatically saves a major or minor version as you work, so there is a history of changes that you can access and revert to if needed.
+SharePoint and OneDrive automatically saves major or minor versions as you work, so there is a history of changes that you can access and revert to if needed.
 Microsoft recently started rolling out general availability of feature ID 145802: "SharePoint: Improvements for document library version history limits". In simpler terms this means we now have an automatic way of thinning out the version history of files and documents in SharePoint Online.
 
 ### Why is it important?
@@ -15,9 +15,9 @@ SharePoint Online has a default version history limit of 500 versions per file. 
 
 But wait, isn't deduplication a thing? Surely this one file is not taking up 50 GB of storage? Unfortunately, it counts towards the quota and Microsoft is probably reaping the benefits of this.
 
-### How does it work?
-The idea is that the older a version becomes, the less value it has. Automatic versioning thin out the version history, allowing restoration points to be evenly spread out over time while still keeping the oldest versions.
-![After enabling advanced versioning](/SharePointVersioning/Versions.webp)
+### How does advanced versioning work?
+The idea is that the older a version becomes, the less value it has. Automatic intelligent versioning thins out the version history, allowing restoration points to be evenly spread out over time while still keeping the older versions available.
+![After enabling advanced versioning](/SharePointVersioning/Versions.png)
 Version storage under Automatic setting is determined by the following algorithm:
 - All versions created within 500 count limit in first 30 days.
 - Hourly versions (versions created at the top of the hour) between 30 to 60 day period.
