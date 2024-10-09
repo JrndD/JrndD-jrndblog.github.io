@@ -93,6 +93,6 @@ You can get around adding yourself as a site collection admin to every site by u
 
 The above code can also be run per library, but I have not tested it. (New-PnPLibraryFileVersionBatchDeleteJob)
 
-Congratilations! You have now enabled automatic versioning for SharePoint Online and saved your company a lot of money. Ensure you write down your achievements and send them to your managers.
+Congratulations! You have now enabled automatic versioning for SharePoint Online and saved your company a lot of money. Ensure you write down your achievements and send them to your managers.
 ### Where can I learn more?
 Microsoft documentation: [(Microsoft Learn: Plan version storage)](https://learn.microsoft.com/en-us/sharepoint/plan-version-storage)
