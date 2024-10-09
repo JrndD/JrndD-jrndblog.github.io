@@ -17,14 +17,14 @@ But wait, isn't deduplication a thing? Surely this one file is not taking up 50 
 
 ### How does it work?
 The idea is that the older a version becomes, the less value it has. Automatic versioning thin out the version history, allowing restoration points to be evenly spread out over time while still keeping the oldest versions.
-![After enabling advanced versioning](/static/SharePointVersioning/Versions.webp)
+![After enabling advanced versioning](/SharePointVersioning/Versions.webp)
 Version storage under Automatic setting is determined by the following algorithm:
 - All versions created within 500 count limit in first 30 days.
 - Hourly versions (versions created at the top of the hour) between 30 to 60 day period.
 - Daily versions (versions created at the beginning of each day) between 60 to 180 day period.
 - Weekly versions (versions created at the beginning of the week) beyond 180 days or more are available indefinitely until the maximum 500 count limit has reached.
 
-![Comparing version configuration options](../version-activity.png)
+![Comparing version configuration options](/SharePointVersioning/version-activity.png)
 The automatic setting gives a good balance between storage and usability. From experience implementing this feature for a number of sites, the storage savings can be significant. Up to 90%(!!!) storage reduction for certain sites.
 
 ### How to enable it?
@@ -43,12 +43,12 @@ New-PnPSiteFileVersionExpirationReportJob  -ReportUrl "https://yourcompany.share
 The above code will generate a version report called VersionReport.csv in the Shared Documents library of the site. You can then download the report and run an impact analysis using tool provided by Microsoft. [(Microsoft Learn: Version usage report analysis tool)](https://learn.microsoft.com/en-us/sharepoint/tutorial-run-what-if-analysis#run-impact-analysis-of-setting-automatic-version-history-limits)
 
 In the provided AnalyzeReportFile_Template.xlsx, the three most important tabs are "Dataset" which showns the version history of each file and if they will expire if an automatic policy is applied. "Version Count" which shows a graph of how many versions will be available before and after policy trim, and "Version Size Analysis" which shows the potential storage savings.
-![Setting the version history limit to Automatic](../VersionSavings.png)
+![Setting the version history limit to Automatic](/SharePointVersioning/VersionSavings.png)
 Storage savings around 80 MB for selected test site.
 
 #### Global settings
 Change the global version history limit setting to "Automatic" in the SharePoint admin center. This will apply to all new OneDrive accounts and new SharePoint document libraries.
-![Setting the version history limit to Automatic](../GlobalSettings.png)
+![Setting the version history limit to Automatic](/SharePointVersioning/GlobalSettings.png)
 
 #### Site settings
 As shown in the image above, this setting does not apply to existing document libraries unless they are set to inherit tenant settings. To enable it for existing document libraries, you need to use PowerShell.
