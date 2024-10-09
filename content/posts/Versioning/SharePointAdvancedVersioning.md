@@ -81,11 +81,15 @@ connect-pnpOnline -url $companyAdminSite -ClientId $PnPClientId
 foreach ($site in $sites) 
 {
     if ($site -in $donesites) {continue}
-
+    # Add your account as a site collection admin to be able to run the version deletion job
     set-pnptenantsite -identity $site -owners $yourAccount
+    # Connect to the site to switch context
     connect-pnpOnline -Url $site -ClientId $PnPClientId
+    # Start the version deletion job
     New-PnPSiteFileVersionBatchDeleteJob -automatic -force
+    # Remove your account as a site collection admin
     remove-pnpsitecollectionadmin -owners $yourAccount
+    # Connect back to the admin site to switch context
     connect-pnpOnline -url $companyAdminSite -ClientId $PnPClientId
 }
 ```
