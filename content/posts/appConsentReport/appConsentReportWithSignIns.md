@@ -66,7 +66,7 @@ $kqlQuery = '
 AADManagedIdentitySignInLogs
 | where TimeGenerated > ago(180d)
 | where ResultType == 0
-| summarize count() by AppId
+| summarize count() by ServicePrincipalId
 '
 $AADManagedIdentitySignInLogsActor = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 
