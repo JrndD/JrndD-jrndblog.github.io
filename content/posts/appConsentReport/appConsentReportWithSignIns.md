@@ -33,7 +33,7 @@ AADServicePrincipalSignInLogs
 $AADServicePrincipalSignInLogs = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 
 # Number of sign ins by service principals themselves.
-# This will count sign ins by service principals twice, but its the only way I have figured out to get activity for managed identities themselves.
+# This will count sign ins by service principals twice, but its the only way I have figured out to get activity for service principals.
 $kqlQuery = '
 AADServicePrincipalSignInLogs
 | where TimeGenerated > ago(180d)
@@ -61,7 +61,7 @@ AADManagedIdentitySignInLogs
 $AADManagedIdentitySignInLogs = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 
 # Number of sign ins per app by managed identity themselves.
-# Unsure if this data is actually valuable, but it doesn't hurt to include it for this specific usecase.
+# This will count sign ins by service principals twice, but its the only way I have figured out to get activity for managed identity.
 $kqlQuery = '
 AADManagedIdentitySignInLogs
 | where TimeGenerated > ago(180d)
