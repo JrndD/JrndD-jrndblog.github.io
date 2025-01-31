@@ -42,3 +42,5 @@ To grant $($chosenRole.RoleName) ($($chosenRole.Value)) from $($chosenRole.Displ
 New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $servicePrincipalId -BodyParameter `$params
 "@
 ```
+
+Link to script on GitHub: [Add permissions to Managed Identity](https://github.com/JrndD/Nifty-scripts-for-Entra-ID-and-Microsoft-365/blob/main/AddPermissionsToManagedIdentity.ps1)
