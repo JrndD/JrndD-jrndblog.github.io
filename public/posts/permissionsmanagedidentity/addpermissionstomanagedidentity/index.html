@@ -124,8 +124,10 @@ The script outputs the command to run to add the permission to the managed ident
 
 </div>
   </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/jrndblog/permissionsManagedIdentity/ManagedIdentityDemo.png" alt="Searching for permissions">
+        
+</figure>
   <div class="post-content"><p>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through all permissions possible to add in my tenant and add it to the managed identity.</p>
-<p><img alt="Searching for permissions" loading="lazy" src="/permissionsManagedIdentity/ManagedIdentityDemo.png"></p>
 <p>The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All
 </span></span><span style="display:flex;"><span>
