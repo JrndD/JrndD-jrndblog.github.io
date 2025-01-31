@@ -14,7 +14,7 @@
       <pubDate>Fri, 31 Jan 2025 15:36:17 +0200</pubDate>
       <guid>http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/</guid>
       <description>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
-Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID! $servicePrincipalId = &amp;#34;00000000-0000-0000-0000-000000000000&amp;#34; # Get all service principals in tenant. Lazy first version. This can be filtered down into the actual useful applications.</description>
+The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly.</description>
     </item>
     <item>
       <title>Entra ID application permission report with usage</title>

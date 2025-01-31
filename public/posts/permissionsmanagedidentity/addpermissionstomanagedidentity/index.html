@@ -8,7 +8,7 @@
 <title>Entra ID - Add permissions to Managed Identity | Jørund writes about IT</title>
 <meta name="keywords" content="">
 <meta name="description" content="Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
-Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID! $servicePrincipalId = &#34;00000000-0000-0000-0000-000000000000&#34; # Get all service principals in tenant. Lazy first version. This can be filtered down into the actual useful applications.">
+The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly.">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/">
 <link crossorigin="anonymous" href="/jrndblog/assets/css/stylesheet.9de45e225101e4f99701d2b68fc6b8a1ef6027928be6391fa15bf7f56326c909.css" integrity="sha256-neReIlEB5PmXAdK2j8a4oe9gJ5KL5jkfoVv39WMmyQk=" rel="preload stylesheet" as="style">
@@ -120,11 +120,12 @@ Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Appl
     <h1 class="post-title entry-hint-parent">
       Entra ID - Add permissions to Managed Identity
     </h1>
-    <div class="post-meta"><span title='2025-01-31 15:36:17 +0200 EET'>January 31, 2025</span>&nbsp;·&nbsp;1 min
+    <div class="post-meta"><span title='2025-01-31 15:36:17 +0200 EET'>January 31, 2025</span>&nbsp;·&nbsp;2 min
 
 </div>
   </header> 
   <div class="post-content"><p>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.</p>
+<p>The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Object ID of the managed identity, NOT application ID!</span>
