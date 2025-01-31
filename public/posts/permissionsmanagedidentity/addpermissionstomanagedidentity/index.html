@@ -5,11 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Categories | Jørund writes about IT</title>
+<title>Entra ID - Add permissions to Managed Identity | Jørund writes about IT</title>
 <meta name="keywords" content="">
-<meta name="description" content="">
+<meta name="description" content="Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
+Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID! $servicePrincipalId = &#34;00000000-0000-0000-0000-000000000000&#34; # Get all service principals in tenant $allServicePrincipal = Get-MgServicePrincipal -All $roles = $allServicePrincipal | ForEach-Object { foreach($r in $_.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/jrndblog/categories/">
+<link rel="canonical" href="http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/">
 <link crossorigin="anonymous" href="/jrndblog/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/jrndblog/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/jrndblog/favicon-16x16.png">
@@ -18,8 +19,7 @@
 <link rel="mask-icon" href="http://localhost:1313/jrndblog/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/jrndblog/categories/index.xml">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/jrndblog/categories/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,7 @@
 </noscript>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -113,12 +113,62 @@
     </nav>
 </header>
 <main class="main">
-<header class="page-header">
-    <h1>Categories</h1>
-</header>
 
-<ul class="terms-tags">
-</ul>
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/jrndblog/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/jrndblog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Entra ID - Add permissions to Managed Identity
+    </h1>
+    <div class="post-meta"><span title='2025-01-31 15:36:17 +0200 EET'>January 31, 2025</span>&nbsp;·&nbsp;1 min
+
+</div>
+  </header> 
+  <div class="post-content"><p>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Object ID of the managed identity, NOT application ID!</span>
+</span></span><span style="display:flex;"><span>$servicePrincipalId = <span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get all service principals in tenant</span>
+</span></span><span style="display:flex;"><span>$allServicePrincipal = Get-MgServicePrincipal -All
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$roles = $allServicePrincipal | ForEach-Object {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span>($r <span style="color:#66d9ef">in</span> $_.AppRoles) {
+</span></span><span style="display:flex;"><span>        [<span style="color:#66d9ef">PSCustomObject</span>]@{
+</span></span><span style="display:flex;"><span>            AppId       = $_.Id
+</span></span><span style="display:flex;"><span>            DisplayName = $_.DisplayName
+</span></span><span style="display:flex;"><span>            Id          = $r.Id
+</span></span><span style="display:flex;"><span>            RoleName    = $r.DisplayName
+</span></span><span style="display:flex;"><span>            Value       = $r.Value
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List all roles and let the user select one (hit enter to continue in the gridview)</span>
+</span></span><span style="display:flex;"><span>$roles | Out-GridView -PassThru -Title <span style="color:#e6db74">&#34;Select the approle you want to assign to the managed identity&#34;</span> | ForEach-Object {
+</span></span><span style="display:flex;"><span>    $chosenRole = $_
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">@&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">To grant </span>$($chosenRole.RoleName)<span style="color:#e6db74"> (</span>$($chosenRole.Value)<span style="color:#e6db74">) from </span>$($chosenRole.DisplayName)<span style="color:#e6db74"> to the managed identity with object ID </span>$servicePrincipalId<span style="color:#e6db74">, run the following:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>$params<span style="color:#e6db74"> = @{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	principalId = </span>$servicePrincipalId<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	resourceId = </span>$($chosenRole.AppId)<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	appRoleId =  </span>$($chosenRole.Id)<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId </span>$servicePrincipalId<span style="color:#e6db74"> -BodyParameter `</span>$params<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;@</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
     </main>
     
 <footer class="footer">

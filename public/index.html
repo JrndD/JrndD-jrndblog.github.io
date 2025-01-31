@@ -130,6 +130,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Entra ID - Add permissions to Managed Identity
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Add permissions to a managed identity Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
+Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID! $servicePrincipalId = &#34;00000000-0000-0000-0000-000000000000&#34; # Get all service principals in tenant $allServicePrincipal = Get-MgServicePrincipal -All $roles = $allServicePrincipal | ForEach-Object { foreach($r in $_....</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-01-31 15:36:17 +0200 EET'>January 31, 2025</span>&nbsp;·&nbsp;1 min</footer>
+  <a class="entry-link" aria-label="post link to Entra ID - Add permissions to Managed Identity" href="http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Entra ID application permission report with usage
     </h2>
   </header>
@@ -137,7 +150,7 @@
     <p>Enterprise applications and app registrations are two of the most dangerous things in Entra ID if managed incorrectly. They grant access to your data and resources, and if compromised, can lead to data breaches and other security incidents. Do you have control over all permissions granted over the course of your tenants lifetime? When was the last time you deleted stale permissions?
 Application permission report My collegue Sridhar linked me a PowerShell module called MSIdentity Tools, which contains a command called Export-MsIdAppConsentGrantReport....</p>
   </div>
-  <footer class="entry-footer"><span title='2024-10-30 21:53:10 +0200 EET'>October 30, 2024</span>&nbsp;·&nbsp;3 min</footer>
+  <footer class="entry-footer"><span title='2024-10-30 21:53:10 +0200 EET'>October 30, 2024</span>&nbsp;·&nbsp;4 min</footer>
   <a class="entry-link" aria-label="post link to Entra ID application permission report with usage" href="http://localhost:1313/jrndblog/posts/appconsentreport/appconsentreportwithsignins/"></a>
 </article>
 
@@ -206,7 +219,7 @@ This guide focuses on the things I consider to be the most important when design
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
 
     <span>
         Powered by

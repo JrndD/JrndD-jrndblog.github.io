@@ -6,14 +6,23 @@
     <description>Recent content in Posts on Jørund writes about IT</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Oct 2024 21:53:10 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jan 2025 15:36:17 +0200</lastBuildDate>
     <atom:link href="http://localhost:1313/jrndblog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AppConsentReportWithSignIns</title>
+      <title>Entra ID - Add permissions to Managed Identity</title>
+      <link>http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/</link>
+      <pubDate>Fri, 31 Jan 2025 15:36:17 +0200</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/</guid>
+      <description>Add permissions to a managed identity Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
+Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID! $servicePrincipalId = &amp;#34;00000000-0000-0000-0000-000000000000&amp;#34; # Get all service principals in tenant $allServicePrincipal = Get-MgServicePrincipal -All $roles = $allServicePrincipal | ForEach-Object { foreach($r in $_.</description>
+    </item>
+    <item>
+      <title>Entra ID application permission report with usage</title>
       <link>http://localhost:1313/jrndblog/posts/appconsentreport/appconsentreportwithsignins/</link>
       <pubDate>Wed, 30 Oct 2024 21:53:10 +0200</pubDate>
       <guid>http://localhost:1313/jrndblog/posts/appconsentreport/appconsentreportwithsignins/</guid>
-      <description></description>
+      <description>Enterprise applications and app registrations are two of the most dangerous things in Entra ID if managed incorrectly. They grant access to your data and resources, and if compromised, can lead to data breaches and other security incidents. Do you have control over all permissions granted over the course of your tenants lifetime? When was the last time you deleted stale permissions?
+Application permission report My collegue Sridhar linked me a PowerShell module called MSIdentity Tools, which contains a command called Export-MsIdAppConsentGrantReport.</description>
     </item>
     <item>
       <title>SharePoint Advanced versioning</title>

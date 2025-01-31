@@ -120,7 +120,7 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
     <h1 class="post-title entry-hint-parent">
       Entra ID application permission report with usage
     </h1>
-    <div class="post-meta"><span title='2024-10-30 21:53:10 +0200 EET'>October 30, 2024</span>&nbsp;·&nbsp;3 min
+    <div class="post-meta"><span title='2024-10-30 21:53:10 +0200 EET'>October 30, 2024</span>&nbsp;·&nbsp;4 min
 
 </div>
   </header> 
@@ -138,6 +138,7 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span><span style="display:flex;"><span>set-AzContext $subscription
 </span></span><span style="display:flex;"><span>$workspace = Get-AzOperationalInsightsWorkspace -ResourceGroupName $resourceGroupName -Name $logAnalyticsWorkspace
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Number of sign ins per app by service principals</span>
 </span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AADServicePrincipalSignInLogs
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
@@ -146,6 +147,17 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
 </span></span><span style="display:flex;"><span>$AADServicePrincipalSignInLogs = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Number of sign ins by service principals themselves.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This will count sign ins by service principals twice, but its the only way I have figured out to get activity for service principals.</span>
+</span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AADServicePrincipalSignInLogs
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where ResultType == 0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| summarize count() by ServicePrincipalId
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>$AADServicePrincipalSignInLogsActor = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Non-interactive sign ins. Probably the least valuable data as it is almost always included in the sign in logs.</span>
 </span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AADNonInteractiveUserSignInLogs
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
@@ -154,6 +166,7 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
 </span></span><span style="display:flex;"><span>$AADNonInteractiveUserSignInLogs = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Number of sign ins per app by a managed identity</span>
 </span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AADManagedIdentitySignInLogs
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
@@ -162,6 +175,17 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
 </span></span><span style="display:flex;"><span>$AADManagedIdentitySignInLogs = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Number of sign ins per app by managed identity themselves.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This will count sign ins by service principals twice, but its the only way I have figured out to get activity for managed identity.</span>
+</span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AADManagedIdentitySignInLogs
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where ResultType == 0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| summarize count() by ServicePrincipalId
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>$AADManagedIdentitySignInLogsActor = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Normal interactive sign ins</span>
 </span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SigninLogs
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(180d)
@@ -189,6 +213,15 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$AADServicePrincipalSignInLogsActor.results | ForEach-Object {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>($signinlogshash[$_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>]) {
+</span></span><span style="display:flex;"><span>        $signinlogshash[$_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>] += [<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        $signinlogshash.Add($_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>,[<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>$AADNonInteractiveUserSignInLogs.results | ForEach-Object {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>($signinlogshash[$_.<span style="color:#e6db74">&#34;AppId&#34;</span>]) {
 </span></span><span style="display:flex;"><span>        $signinlogshash[$_.<span style="color:#e6db74">&#34;AppId&#34;</span>] += [<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>
@@ -204,6 +237,15 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
 </span></span><span style="display:flex;"><span>        $signinlogshash.Add($_.<span style="color:#e6db74">&#34;AppId&#34;</span>,[<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$AADManagedIdentitySignInLogsActor.results | ForEach-Object {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>($signinlogshash[$_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>]) {
+</span></span><span style="display:flex;"><span>        $signinlogshash[$_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>] += [<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        $signinlogshash.Add($_.<span style="color:#e6db74">&#34;ServicePrincipalId&#34;</span>,[<span style="color:#66d9ef">int</span>]$_.<span style="color:#e6db74">&#34;count_&#34;</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The above code generates a hash table with the AppId as the key and the total number of successful sign-ins as the value.</p>
@@ -248,7 +290,7 @@ Application permission report My collegue Sridhar linked me a PowerShell module 
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
 
     <span>
         Powered by

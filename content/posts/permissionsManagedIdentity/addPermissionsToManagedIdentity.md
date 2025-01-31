@@ -1,0 +1,44 @@
++++
+title = 'Entra ID - Add permissions to Managed Identity'
+date = 2025-01-31T15:36:17+02:00
++++
+
+Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through the permissions in my tenant and add it to the managed identity.
+
+```powershell
+Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All
+
+# Object ID of the managed identity, NOT application ID!
+$servicePrincipalId = "00000000-0000-0000-0000-000000000000"
+
+# Get all service principals in tenant
+$allServicePrincipal = Get-MgServicePrincipal -All
+
+$roles = $allServicePrincipal | ForEach-Object {
+    foreach($r in $_.AppRoles) {
+        [PSCustomObject]@{
+            AppId       = $_.Id
+            DisplayName = $_.DisplayName
+            Id          = $r.Id
+            RoleName    = $r.DisplayName
+            Value       = $r.Value
+        }
+    }
+}
+
+# List all roles and let the user select one (hit enter to continue in the gridview)
+$roles | Out-GridView -PassThru -Title "Select the approle you want to assign to the managed identity" | ForEach-Object {
+    $chosenRole = $_
+}
+
+@"
+To grant $($chosenRole.RoleName) ($($chosenRole.Value)) from $($chosenRole.DisplayName) to the managed identity with object ID $servicePrincipalId, run the following:
+
+`$params = @{
+	principalId = $servicePrincipalId
+	resourceId = $($chosenRole.AppId)
+	appRoleId =  $($chosenRole.Id)
+}
+New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $servicePrincipalId -BodyParameter `$params
+"@
+```
