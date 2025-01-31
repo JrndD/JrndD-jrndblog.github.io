@@ -11,7 +11,7 @@ Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Appl
 # Object ID of the managed identity, NOT application ID!
 $servicePrincipalId = "00000000-0000-0000-0000-000000000000"
 
-# Get all service principals in tenant
+# Get all service principals in tenant. Lazy first version. This can be filtered down into the actual useful applications.
 $allServicePrincipal = Get-MgServicePrincipal -All
 
 $roles = $allServicePrincipal | ForEach-Object {
