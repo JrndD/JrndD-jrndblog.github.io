@@ -6,9 +6,9 @@ date = 2025-01-31T15:36:17+02:00
   alt = 'Searching for permissions'
 +++
 
-Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through all permissions possible to add in my tenant and add it to the managed identity.
+Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier, I created a short script that allows me to search through all possible permissions in a simple GUI.
 
-The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly.
+The script outputs the command needed to add the permission to the managed identity. If you feel confident, you can modify the script to run it directly.
 
 ```powershell
 Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All
