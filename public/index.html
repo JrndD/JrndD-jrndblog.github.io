@@ -129,6 +129,22 @@
 </article>
 
 <article class="post-entry"> 
+<figure class="entry-cover"><img loading="lazy" src="http://localhost:1313/jrndblog/ConditionalAccess/Device-code-phishing-attack-chain.webp" alt="Getting lost in the version history">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Conditional Access - Deploying new policies using data
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Image source: (Storm-2372 conducts device code phishing campaign)
+Last weeks device code phishing campaign “Storm-2372” forced many organizations to quickly implement countermeasures to block the attack. While I hope most organizations has already had the time to implement the necessary changes, I wanted to share a few tips on how to use data to target your deployment. Both for this specific campaign, but also for other similar controls.
+Conditional Access Conditional Access is a powerful tool to control access to your resources....</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-02-17 08:36:19 +0200 EET'>February 17, 2025</span>&nbsp;·&nbsp;3 min</footer>
+  <a class="entry-link" aria-label="post link to Conditional Access - Deploying new policies using data" href="http://localhost:1313/jrndblog/posts/conditionalaccess/targeteddeploymentusingdata/"></a>
+</article>
+
+<article class="post-entry"> 
 <figure class="entry-cover"><img loading="lazy" src="http://localhost:1313/jrndblog/permissionsManagedIdentity/ManagedIdentityDemo.png" alt="Searching for permissions">
 </figure>
   <header class="entry-header">
@@ -136,8 +152,9 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier for myself I made this short script to allow me to easily search through all permissions possible to add in my tenant and add it to the managed identity.
-The script outputs the command to run to add the permission to the managed identity. If you are feeling brave you can modify the script to run it directly....</p>
+    <p>Adding permissions to Managed Identities in Entra ID is annoyingly complicated. To make the job easier, I created a short script that allows me to search through all possible permissions in a simple GUI.
+The script outputs the command needed to add the permission to the managed identity. If you feel confident, you can modify the script to run it directly.
+Connect-MgGraph -Scope Directory.Read.All, AppRoleAssignment.ReadWrite.All, Application.Read.All # Object ID of the managed identity, NOT application ID!...</p>
   </div>
   <footer class="entry-footer"><span title='2025-01-31 15:36:17 +0200 EET'>January 31, 2025</span>&nbsp;·&nbsp;2 min</footer>
   <a class="entry-link" aria-label="post link to Entra ID - Add permissions to Managed Identity" href="http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/"></a>

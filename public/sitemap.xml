@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/</loc>
-    <lastmod>2025-01-31T15:36:17+02:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/jrndblog/</loc>
-    <lastmod>2025-01-31T15:36:17+02:00</lastmod>
+    <lastmod>2025-02-17T08:36:19+02:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/jrndblog/posts/</loc>
+    <lastmod>2025-02-17T08:36:19+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/jrndblog/posts/conditionalaccess/targeteddeploymentusingdata/</loc>
+    <lastmod>2025-02-17T08:36:19+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/jrndblog/posts/permissionsmanagedidentity/addpermissionstomanagedidentity/</loc>
     <lastmod>2025-01-31T15:36:17+02:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/jrndblog/posts/appconsentreport/appconsentreportwithsignins/</loc>
