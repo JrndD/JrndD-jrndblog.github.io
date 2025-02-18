@@ -62,7 +62,7 @@ SigninLogs
 //| summarize count() by UserPrincipalName
 ```
 
-Want to proactively help users who has never had a single successful MFA sign-in before tightening the MFA requirements? Note, this will only show those who has failed MFA, not those who has never tried. Modify the query to fit your needs.
+Want to proactively help users who has never had a single successful MFA sign-in before tightening the MFA requirements? Note, this will only show those who has failed every MFA prompt, not those who has never been asked for MFA. Modify the query to fit your needs.
 
 ```KQL
 SigninLogs
