@@ -3,7 +3,7 @@ title = 'Conditional Access - Deploying new policies using data'
 date = 2025-02-17T08:36:19+02:00
 [params.cover]
   image = 'ConditionalAccess/Device-code-phishing-attack-chain.webp'
-  alt = 'Getting lost in the version history'
+  alt = 'Storm-2372 conducts device code phishing campaign'
 +++
 Image source: [(Storm-2372 conducts device code phishing campaign)](https://www.microsoft.com/en-us/security/blog/2025/02/13/storm-2372-conducts-device-code-phishing-campaign/)
 
@@ -71,3 +71,5 @@ SigninLogs
 | summarize SignInSuccess = make_set(ResultType) by UserPrincipalName
 | where SignInSuccess !has '0'
 ```
+
+To conclude. Use the data available to your advantage. Targeted communication and deployment will make your life easier, and your users happier.
