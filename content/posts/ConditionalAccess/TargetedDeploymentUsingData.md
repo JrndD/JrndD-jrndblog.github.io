@@ -7,7 +7,7 @@ date = 2025-02-17T08:36:19+02:00
 +++
 Image source: [(Storm-2372 conducts device code phishing campaign)](https://www.microsoft.com/en-us/security/blog/2025/02/13/storm-2372-conducts-device-code-phishing-campaign/)
 
-Last weeks device code phishing campaign "Storm-2372" forced many organizations to quickly implement countermeasures to block the attack. While I hope most organizations has already had the time to implement the necessary changes, I wanted to share a few tips on how to use data to target your deployment. Both for this specific campaign, but also for other similar controls.
+Last weeks device code phishing campaign conducted by "Storm-2372" forced many organizations to quickly implement countermeasures to block the attack. While I hope most organizations has already had the time to implement the necessary changes, I wanted to share a few tips on how to use data to target your deployment. Both for this specific campaign, but also for other similar controls.
 
 ## Conditional Access
 
