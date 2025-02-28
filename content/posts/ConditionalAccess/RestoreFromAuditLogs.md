@@ -1,5 +1,5 @@
 +++
-title = 'Restore condtitional access policies from audit log'
+title = 'Restore conditional access policies from audit log'
 date = 2025-02-28T21:02:21+02:00
 [params.cover]
   image = 'ConditionalAccess/CAPolicyChangesDiff.png'
