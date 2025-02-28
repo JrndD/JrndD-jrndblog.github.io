@@ -5,7 +5,6 @@ date = 2025-02-28T21:02:21+02:00
   image = 'ConditionalAccess/CAPolicyChangesDiff.png'
   alt = 'Conditional Access policy change diff'
 +++
-+++
 
 From time to time I need to restore Conditional Access policies that have been deleted or changed. If you don't have a backup of the policies, you can luckily use the audit logs to help you restore.
 
