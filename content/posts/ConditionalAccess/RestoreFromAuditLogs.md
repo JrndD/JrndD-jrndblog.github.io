@@ -6,11 +6,11 @@ date = 2025-02-28T21:02:21+02:00
   alt = 'Conditional Access policy change diff'
 +++
 
-From time to time I need to restore Conditional Access policies that have been deleted or changed. If you don't have a backup of the policies, you can luckily use the audit logs to help you restore.
+From time to time, I need to restore Conditional Access policies that have been deleted or changed. If you don't have a backup of the policies, you can luckily use the audit logs to help you restore.
 
 Up until now I have just crawled my way through KQL queries to find the information I need, but a recent Entra ID preview feature allowing you to view each change as a colored diff gave me an idea. What if I could create a script to compare the policy at any point in time as far back as I store my audit logs?
 
-First. Lets get the audit logs for all policy changes. Here I search for any changes the last year.
+First. Let's get the audit logs for all policy changes. Here I search for any changes in the last year.
 
 ❗Disclaimer, for the final diff view this script relies on Visual Studio Code.
 
@@ -128,4 +128,4 @@ And voilà, you now have a diff of the changes made to the policy.
 
 This script can be modified in several ways to give other insights. Comparing two different policies to see the differences comes to mind as one example.
 
-It should also be a relatively small effort to modify the script to automatically restore a policy to a point in time, but thats a story for another day.
+It should also be a relatively small effort to modify the script to automatically restore a policy to a point in time, but that's a story for another day.
