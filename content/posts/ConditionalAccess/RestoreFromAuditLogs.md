@@ -10,6 +10,8 @@ From time to time I need to restore Conditional Access policies that have been d
 
 Up until now I have just crawled my way through KQL queries to find the information I need, but a recent Entra ID preview feature allowing you to view each change as a colored diff gave me an idea. What if I could create a script to compare the policy at any point in time as far back as I store my audit logs?
 
+Disclaimer, this script relies on Visual Studio Code for the Diff view.
+
 ```PowerShell
 $tenantId = <tenantId>
 $subscription = <subscription>
