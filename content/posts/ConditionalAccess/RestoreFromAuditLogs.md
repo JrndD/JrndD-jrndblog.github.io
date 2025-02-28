@@ -10,7 +10,9 @@ From time to time I need to restore Conditional Access policies that have been d
 
 Up until now I have just crawled my way through KQL queries to find the information I need, but a recent Entra ID preview feature allowing you to view each change as a colored diff gave me an idea. What if I could create a script to compare the policy at any point in time as far back as I store my audit logs?
 
-Disclaimer, this script relies on Visual Studio Code for the Diff view.
+First. Lets get the audit logs for all policy changes. Here I search for any changes the last year.
+
+❗Disclaimer, this script relies on Visual Studio Code for the Diff view.
 
 ```PowerShell
 $tenantId = <tenantId>
@@ -45,7 +47,7 @@ foreach ($log in $CAlogs) {
 $policyList
 ```
 
-The variable $policyList now contains all changes to Conditional Access policies over the time specified in the query. Once you have decided which policy you are interested in, fetch the Id and enter into the next part of the script.
+The variable $policyList now contains all changes to Conditional Access policies over the time specified in the query. Once you have decided which policy you are interested in, fetch the Id and enter into the next part of the script. Where we will identify which points in time we want to compare.
 
 ```PowerShell
 # Select a policy to analyze
@@ -77,7 +79,7 @@ Now we have a list of changes, and when the changes occured.
 
 ![List of changes](/ConditionalAccess/CAPolicyChanges.png)
 
-Copy the TimeGenerated and whether you are interested in the old or the new value into the next part.
+Copy the TimeGenerated and whether you are interested in the old or the new value into the next part to get a diff of the changes.
 
 ```PowerShell
 # First comparison
