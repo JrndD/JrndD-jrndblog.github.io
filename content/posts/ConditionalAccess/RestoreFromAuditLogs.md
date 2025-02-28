@@ -79,7 +79,7 @@ Now we have a list of changes, and when the changes occured.
 
 ![List of changes](/ConditionalAccess/CAPolicyChanges.png)
 
-Copy the TimeGenerated and whether you are interested in the old or the new value into the next part to get a diff of the changes. Comparing with a value which is "Not Present" just will compare against an empty object, which can be helpful if you want to see how a policy looked before deletion.
+Copy the TimeGenerated and whether you are interested in the old or the new value into the next part to get a diff of the changes. Comparing with a value which is "Not Present" will compare against an empty object, which can be helpful if you want to see how a policy looked before deletion.
 
 ```PowerShell
 # First comparison
