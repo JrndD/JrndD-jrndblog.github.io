@@ -12,7 +12,7 @@ Up until now I have just crawled my way through KQL queries to find the informat
 
 First. Lets get the audit logs for all policy changes. Here I search for any changes the last year.
 
-❗Disclaimer, this script relies on Visual Studio Code for the Diff view.
+❗Disclaimer, for the final diff view this script relies on Visual Studio Code.
 
 ```PowerShell
 $tenantId = <tenantId>
