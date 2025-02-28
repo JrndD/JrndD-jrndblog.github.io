@@ -6,15 +6,22 @@
     <description>Recent content in Posts on Jørund writes about IT</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Feb 2025 08:36:19 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 28 Feb 2025 21:02:21 +0200</lastBuildDate>
     <atom:link href="http://localhost:1313/jrndblog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>TargetedDeploymentUsingData</title>
+      <title>Restore condtitional access policies from audit log</title>
+      <link>http://localhost:1313/jrndblog/posts/conditionalaccess/restorefromauditlogs/</link>
+      <pubDate>Fri, 28 Feb 2025 21:02:21 +0200</pubDate>
+      <guid>http://localhost:1313/jrndblog/posts/conditionalaccess/restorefromauditlogs/</guid>
+      <description>From time to time I need to restore Conditional Access policies that have been deleted or changed. If you don&amp;rsquo;t have a backup of the policies, you can luckily use the audit logs to help you restore. Up until now I have just crawled my way through KQL queries to find the information I need, but a recent preview feature allowing you to view each change as a git diff gave me an idea.</description>
+    </item>
+    <item>
+      <title>Conditional Access - Deploying new policies using data</title>
       <link>http://localhost:1313/jrndblog/posts/conditionalaccess/targeteddeploymentusingdata/</link>
       <pubDate>Mon, 17 Feb 2025 08:36:19 +0200</pubDate>
       <guid>http://localhost:1313/jrndblog/posts/conditionalaccess/targeteddeploymentusingdata/</guid>
-      <description>Last weeks device code phishing campaign &amp;ldquo;Storm-237&amp;rdquo; forced many organizations to quickly implement countermeasures to block the attack. While I hope most organizations has already had the time to implement the necessary changes, I wanted to share a few tips on how to use data to target your deployment. Both for this specific campaign, but also for other similar controls.
-Conditional Access Conditional Access is a powerful tool to control access to your resources.</description>
+      <description>Image source: (Storm-2372 conducts device code phishing campaign)
+Last weeks device code phishing campaign conducted by &amp;ldquo;Storm-2372&amp;rdquo; forced many organizations to quickly implement countermeasures to block the attack. While I hope most organizations has already had the time to implement the necessary changes, I wanted to share a few tips on how to use data to target your deployment. Both for this specific campaign, but also for other similar controls.</description>
     </item>
     <item>
       <title>Entra ID - Add permissions to Managed Identity</title>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/jrndblog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=jrndblog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Restore condtitional access policies from audit log | Jørund writes about IT</title>
+<meta name="keywords" content="">
+<meta name="description" content="&#43;&#43;&#43;
+From time to time I need to restore Conditional Access policies that have been deleted or changed. If you don&rsquo;t have a backup of the policies, you can luckily use the audit logs to help you restore.
+Up until now I have just crawled my way through KQL queries to find the information I need, but a recent Entra ID preview feature allowing you to view each change as a colored diff gave me an idea.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/jrndblog/posts/conditionalaccess/restorefromauditlogs/">
+<link crossorigin="anonymous" href="/jrndblog/assets/css/stylesheet.9de45e225101e4f99701d2b68fc6b8a1ef6027928be6391fa15bf7f56326c909.css" integrity="sha256-neReIlEB5PmXAdK2j8a4oe9gJ5KL5jkfoVv39WMmyQk=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/jrndblog/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/jrndblog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/jrndblog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/jrndblog/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/jrndblog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/jrndblog/posts/conditionalaccess/restorefromauditlogs/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/jrndblog/" accesskey="h" title="Jørund writes about IT (Alt + H)">Jørund writes about IT</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/jrndblog/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/jrndblog/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/jrndblog/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/jrndblog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Restore condtitional access policies from audit log
+    </h1>
+    <div class="post-meta"><span title='2025-02-28 21:02:21 +0200 EET'>February 28, 2025</span>&nbsp;·&nbsp;3 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/jrndblog/ConditionalAccess/CAPolicyChangesDiff.png" alt="Conditional Access policy change diff">
+        
+</figure>
+  <div class="post-content"><p>+++</p>
+<p>From time to time I need to restore Conditional Access policies that have been deleted or changed. If you don&rsquo;t have a backup of the policies, you can luckily use the audit logs to help you restore.</p>
+<p>Up until now I have just crawled my way through KQL queries to find the information I need, but a recent Entra ID preview feature allowing you to view each change as a colored diff gave me an idea. What if I could create a script to compare the policy at any point in time as far back as I store my audit logs?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span>$tenantId = &lt;tenantId&gt;
+</span></span><span style="display:flex;"><span>$subscription = &lt;subscription&gt;
+</span></span><span style="display:flex;"><span>$resourceGroupName = &lt;resourceGroupName&gt;
+</span></span><span style="display:flex;"><span>$logAnalyticsWorkspace = &lt;logAnalyticsWorkspace&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Connect-AzAccount -Tenant $tenantId
+</span></span><span style="display:flex;"><span>set-AzContext $subscription
+</span></span><span style="display:flex;"><span>$workspace = Get-AzOperationalInsightsWorkspace -ResourceGroupName $resourceGroupName -Name $logAnalyticsWorkspace
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Query audit logs for conditional access policy changes</span>
+</span></span><span style="display:flex;"><span>$kqlQuery = <span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AuditLogs
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where TimeGenerated &gt; ago(365d)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| where OperationName in (&#34;Update conditional access policy&#34;,&#34;Delete conditional access policy&#34;,&#34;Add conditional access policy&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>$CAlogs = (Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery).results
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a somewhat readable list of changes</span>
+</span></span><span style="display:flex;"><span>$policyList = @()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($log <span style="color:#66d9ef">in</span> $CAlogs) {
+</span></span><span style="display:flex;"><span>    $policy = [<span style="color:#66d9ef">PSCustomObject</span>]@{
+</span></span><span style="display:flex;"><span>        TimeGenerated = $log.TimeGenerated
+</span></span><span style="display:flex;"><span>        OperationName = $log.OperationName
+</span></span><span style="display:flex;"><span>        Id = ($log.TargetResources | ConvertFrom-Json).id
+</span></span><span style="display:flex;"><span>        DisplayName = ($log.TargetResources | ConvertFrom-Json).displayName
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    $policyList += $policy
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$policyList
+</span></span></code></pre></div><p>The variable $policyList now contains all changes to Conditional Access policies over the time specified in the query. Once you have decided which policy you are interested in, fetch the Id and enter into the next part of the script.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span><span style="color:#75715e"># Select a policy to analyze</span>
+</span></span><span style="display:flex;"><span>$id = &lt;policyId&gt;
+</span></span><span style="display:flex;"><span>$selectedPolicies = $CAlogs | Where-Object { ($_.TargetResources | ConvertFrom-Json).id <span style="color:#f92672">-eq</span> $id }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Per timegenerated, id and displayname, get the old and the new configuration</span>
+</span></span><span style="display:flex;"><span>$selectedPolicy = [<span style="color:#66d9ef">PSCustomObject</span>]@{
+</span></span><span style="display:flex;"><span>    Id = $id
+</span></span><span style="display:flex;"><span>    DisplayName = ($selectedPolicies[<span style="color:#ae81ff">0</span>].TargetResources | ConvertFrom-Json).displayName
+</span></span><span style="display:flex;"><span>    Changes = @()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($log <span style="color:#66d9ef">in</span> $selectedPolicies) {
+</span></span><span style="display:flex;"><span>    $change = [<span style="color:#66d9ef">PSCustomObject</span>]@{
+</span></span><span style="display:flex;"><span>        TimeGenerated = $log.TimeGenerated
+</span></span><span style="display:flex;"><span>        Operation = $log.OperationName
+</span></span><span style="display:flex;"><span>        oldValue = ($log.TargetResources | ConvertFrom-Json).modifiedProperties.oldValue
+</span></span><span style="display:flex;"><span>        newValue = ($log.TargetResources | ConvertFrom-Json).modifiedProperties.newValue
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    $selectedPolicy.Changes += $change
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List out TimeGenerated, Operation and whether oldValue and newValue are present</span>
+</span></span><span style="display:flex;"><span>$selectedPolicy.Changes | Select-Object TimeGenerated, Operation, @{Name=<span style="color:#e6db74">&#34;OldValue&#34;</span>; Expression={<span style="color:#66d9ef">if</span> ($_.oldValue) { <span style="color:#e6db74">&#34;Present&#34;</span> } <span style="color:#66d9ef">else</span> { <span style="color:#e6db74">&#34;Not Present&#34;</span> } }}, @{Name=<span style="color:#e6db74">&#34;NewValue&#34;</span>; Expression={<span style="color:#66d9ef">if</span> ($_.newValue) { <span style="color:#e6db74">&#34;Present&#34;</span> } <span style="color:#66d9ef">else</span> { <span style="color:#e6db74">&#34;Not Present&#34;</span> } }}
+</span></span></code></pre></div><p>Now we have a list of changes, and when the changes occured.</p>
+<p><img alt="List of changes" loading="lazy" src="/ConditionalAccess/CAPolicyChanges.png"></p>
+<p>Copy the TimeGenerated and whether you are interested in the old or the new value into the next part.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PowerShell" data-lang="PowerShell"><span style="display:flex;"><span><span style="color:#75715e"># First comparison</span>
+</span></span><span style="display:flex;"><span>$timeGenerated1 = <span style="color:#e6db74">&#39;2025-01-14T06:44:58.8148868Z&#39;</span>
+</span></span><span style="display:flex;"><span>$beforeOrAfterChange1 = <span style="color:#e6db74">&#39;newValue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Second comparison</span>
+</span></span><span style="display:flex;"><span>$timeGenerated2 = <span style="color:#e6db74">&#39;2025-02-20T11:36:51.2522837Z&#39;</span>
+</span></span><span style="display:flex;"><span>$beforeOrAfterChange2 = <span style="color:#e6db74">&#39;oldValue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$comparison1 = ($selectedPolicy.Changes | Where-Object { $_.TimeGenerated <span style="color:#f92672">-eq</span> $timeGenerated1 } | Select-Object $beforeOrAfterChange1).$beforeOrAfterChange1 | ConvertFrom-Json | ConvertTo-Json -Depth <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>$comparison2 = ($selectedPolicy.Changes | Where-Object { $_.TimeGenerated <span style="color:#f92672">-eq</span> $timeGenerated2 } | Select-Object $beforeOrAfterChange2).$beforeOrAfterChange2 | ConvertFrom-Json | ConvertTo-Json -Depth <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$f1 = New-TemporaryFile
+</span></span><span style="display:flex;"><span>$f2 = New-TemporaryFile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$comparison1 | Out-File $f1.FullName
+</span></span><span style="display:flex;"><span>$comparison2 | Out-File $f2.FullName
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check for VS Code in common installation paths</span>
+</span></span><span style="display:flex;"><span>$vsCodePaths = @(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;C:\Program Files\Microsoft VS Code\Code.exe&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;</span>${env:LOCALAPPDATA}<span style="color:#e6db74">\Programs\Microsoft VS Code\Code.exe&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;</span>${env:ProgramFiles}<span style="color:#e6db74">\Microsoft VS Code\Code.exe&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$vsCodePath = $vsCodePaths | Where-Object { Test-Path $_ } | Select-Object -First <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($vsCodePath) {
+</span></span><span style="display:flex;"><span>    &amp; $vsCodePath --diff $f1.FullName $f2.FullName
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    Write-Host <span style="color:#e6db74">&#34;VS Code not found.&#34;</span> -ForegroundColor Yellow
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Write-Host <span style="color:#e6db74">&#34;Removing </span>$($f1.FullName)<span style="color:#e6db74"> and </span>$($f2.FullName)<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start-sleep -Seconds <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Remove-Item $f1.FullName
+</span></span><span style="display:flex;"><span>Remove-Item $f2.FullName
+</span></span></code></pre></div><p>And voilà, you now have a diff of the changes made to the policy.</p>
+<p><img alt="List of changes" loading="lazy" src="/ConditionalAccess/CAPolicyChangesDiff.png"></p>
+<p>This script can be modified in several ways to give other insights. Comparing two different policies to see the differences comes to mind as one example.</p>
+<p>It should also be a relatively small effort to modify the script to automatically restore a policy to a point in time, but thats a story for another day.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/jrndblog/">Jørund writes about IT</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
